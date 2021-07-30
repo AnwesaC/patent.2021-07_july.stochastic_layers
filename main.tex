@@ -9,6 +9,7 @@
 \vspace{-5cm}
 \maketitle
 \vspace{-2cm}
+
 \section{Architecture}
 We categorize the stochastic layers based on their architecture.
 Any trainable network or a layer with trainable parameters can act as a stochastic layer. 
@@ -156,5 +157,14 @@ h_{W_\mathrm{stoc.}}=W_\mathrm{stoc.} \cdot x
 The parameters ($\mu_{W_\mathrm{stoc.}}$, $\sigma_{W_\mathrm{stoc.}}$), representing a distribution for the weight vector, are trained following the previous sub-section.
 A forward pass is performed using the trained parameters to produce the output activation map $h_{W_\mathrm{stoc.}}$ which acts as an input activation for the next layer in the neural network.
 
+
+\section{Embodiments of Stochastic Layers}
+We consider a neural network $N$, input $x$, a stochastic layer $S_L$, and $n$ additional regular layers $L_{i\text{\{$i=0$ to $n$\}}}$. In the normal state of using $N$, the input is applied to $N$ without the involvement of $S_L$ or $L_i$. We propose a few embodiments as described below.
+\begin{enumerate}
+    \item In one embodiment, we propose this new arrangement as shown. $x \rightarrow L_{i\text{\{$i=0$ to $n$\}}} \rightarrow S_L \rightarrow N$.
+    \item In another embodiment, we break $N$ into two parts $N_1$ and $N_2$, where $N$ is equivalent to $N_1$,$N_2$ back to back. Let $O_1$ be the output of applying $N_1$ to $x$, i.e., $O_1 = x \rightarrow N_1$. Let $O_2$ be the output of applying $L_{i\text{\{$i=0$ to $n$\}}}$ to $x$, i.e., $O_2 = x \rightarrow L_{i\text{\{$i=0$ to $n$\}}}$. Then, we merge $O_1$ and $O_2$ and pass the merged results through $S_L$. We then pass the resulting activations through $N_2$.
+    \item In another embodiment, we apply $S_L$ to $O_2$, then merge the results with $O_1$, and then pass the result through $N_2$.
+    
+\end{enumerate}
 
 \end{document}
